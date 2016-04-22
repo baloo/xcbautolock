@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+PACKAGE_VER:=$(shell dpkg-parsechangelog | sed -n -e 's/^Version: //p')
+DEB_PATH=dists/unstable/main/binary-amd64
+export PREFIX=/usr/
+export INSTALL_MAN=echo
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	mkdir -p debian/xcbautolock/usr/bin
+	dh_auto_install
+
+.PHONY:
+publish:
+	rm -rf .git/publish
+	git branch -D publish || true
+	git worktree add .git/publish
+	cd .git/publish; git branch -D gh-pages || true
+	cd .git/publish; git checkout --orphan gh-pages
+	cd .git/publish; git rm -rf .; git clean -x -d -f
+	mkdir -p .git/publish/debian/${DEB_PATH}
+	cp ../xcbautolock_${PACKAGE_VER}_*.deb .git/publish/debian/
+	cd .git/publish/debian; dpkg-scanpackages . > ${DEB_PATH}/Packages
+	cd .git/publish; echo '<html><body><pre>deb http://baloo.github.io/xcbautolock/debian/ unstable main</pre></body></html>' > index.html
+	gpg --sign  -ba --digest-algo SHA256 -o .git/publish/debian/${DEB_PATH}/Packages.gpg .git/publish/debian/${DEB_PATH}/Packages
+	cd .git/publish/debian/dists/unstable/; apt-ftparchive --md5 --sha256 release . > Release
+	cd .git/publish/debian/dists/unstable/; gpg --armor --digest-algo SHA256 --output Release.gpg --detach-sign Release
+	cd .git/publish/debian/dists/unstable/; gpg --clearsign --digest-algo SHA256 --output InRelease Release
+	cd .git/publish; git add .; git commit -m "new version"
+	git push baloo +gh-pages

@@ -1,0 +1,15 @@
+Source: xcbautolock
+Section: x11
+Priority: optional
+Maintainer: Arthur Gautier <baloo@gandi.net>
+Build-Depends: debhelper (>=9),
+               libxcb-screensaver0-dev,
+               libx11-xcb-dev
+Standards-Version: 3.9.6
+Homepage: https://github.com/bapt/xcbautolock
+
+Package: xcbautolock
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: xcb autolock
+ xcb autolock
