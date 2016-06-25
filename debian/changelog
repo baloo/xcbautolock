@@ -1,3 +1,9 @@
+xcbautolock (0.2.1) unstable; urgency=medium
+
+  * Fix race when unlocking
+
+ -- Arthur Gautier <baloo@gandi.net>  Sat, 25 Jun 2016 22:33:08 +0000
+
 xcbautolock (0.1) unstable; urgency=medium
 
   * Initial release
