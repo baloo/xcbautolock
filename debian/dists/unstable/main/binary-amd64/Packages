@@ -1,0 +1,17 @@
+Package: xcbautolock
+Version: 0.2.2
+Architecture: amd64
+Maintainer: Arthur Gautier <baloo@gandi.net>
+Installed-Size: 25
+Depends: libc6 (>= 2.15), libxcb-screensaver0, libxcb1
+Filename: ./xcbautolock_0.2.2_amd64.deb
+Size: 6850
+MD5sum: 8acdc0296422c809d139d6589eb467b8
+SHA1: e23606ea568e13187127def85492361b85e00f1f
+SHA256: 4efa5fdcb38f2880218870cc442a43c822e0f3c0d3f1fe41cbe3bc46a68ec227
+Section: x11
+Priority: optional
+Homepage: https://github.com/bapt/xcbautolock
+Description: xcb autolock
+ xcb autolock
+
